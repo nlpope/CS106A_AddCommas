@@ -12,19 +12,30 @@ import acm.program.*;
 
 public class CS106A_AddCommas extends ConsoleProgram
 {
+	private static final String SENTINEL = "-0";
+	
+	
+	
 	public void run()
+	//public static void main(String[] args)
 	{
+		
 		while(true){
 			String clientInput = readLine("Enter a number: ");
-			if (clientInput.length() == 0){ println("goodbye"); break; }
+			if (clientInput.length() == 0 || clientInput.equals(SENTINEL)){ 
+				println("goodbye"); 
+				break; 
+			}
 			if (isANumber(clientInput)){
 				String clientInputWithCommas = addCommas(clientInput);
 				println(clientInputWithCommas);
-				break;
 			} else { 
 				println("incorrect format please try again.");
 			}
 		}
+		
+		
+		//try { println("hey"); } catch (IllegalArgumentException e) {}
 	}
 	
 	
@@ -47,16 +58,27 @@ public class CS106A_AddCommas extends ConsoleProgram
 	private String addCommas(String strDigits)
 	{ 
 		StringBuffer sb = new StringBuffer(strDigits);
-		
+		/**
 		for (int i = strDigits.length()-1; i > 0; i--){
-			char c = strDigits.charAt(i);
-			strDigitsWithCommas += c;
-			if (i != strDigits.length()-1 && i % 3 == 0){
-				strDigitsWithCommas += ',';
+			println(i % 3);
+			if (i != strDigits.length()-1 && i % 3 == 0 && i-3 >-1){
+				sb.insert(i+1,',');
+			}
+			
+		}
+		*/
+		int commasPresent = 0;
+		for (int i = 0; i < strDigits.length(); i++){
+			// &&(Character)strDigits.charAt(i+3)!= null
+			sb.insert(i, ',');
+			if (i != 0 && i-commasPresent % 3 == 0){
+				//println("sb i - 2-commaspresent = " + (i-2-commasPresent));
+				sb.insert(i, ',');
+				println("insert == " + sb);
+				commasPresent++;
 			}
 		}
-		StringBuilder.insert(".");
 	
-		return strDigitsWithCommas;
+		return sb.toString();
 	}
 }
